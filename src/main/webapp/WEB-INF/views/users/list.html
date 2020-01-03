@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <link href="/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet">
+    <style>
+        table {
+            width: 80%;
+            margin: auto;
+            background: rgba(19, 35, 47, 0.9);
+            box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+            color: white;
+
+        }
+
+        th {
+            background-color: #1ab188;
+            padding: 10px;
+            text-transform: capitalize;
+            font-size: 18px;
+
+        }
+
+        td {
+            border: 1px solid #ffffff80;
+            padding: 10px;
+        }
+
+        a {
+            color: #19a07e;
+            text-decoration: none;
+            font-weight: 800;
+            border: 3px groove #1ab188;
+            padding: 8px;
+        }
+
+        a:hover {
+            color: red;
+            margin-left: 10px;
+            transition-duration: 1s;
+        }
+
+        tr:hover {
+            background-color: white;
+            color: black!important;
+            transition-duration: 1.2s;
+        }
+        body{
+            background: url(https://www.toptal.com/designers/subtlepatterns/patterns/hotel-wallpaper-black.png);
+            font-family: 'Titillium Web', sans-serif;
+            color: white;
+        }
+        img {
+            border-radius: 50%;
+            height:200px
+        }
+    </style>
+
+</head>
+<body>
+<h1 class="title" style="text-align: center">Users List</h1>
+<div>
+    <table>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>D-o-B</th>
+            <th>Phone - Number</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+        <th:block th:each="user : ${users}">
+            <tr>
+                <td><img width="250px" height="150" th:src="@{'/img/' + ${user.img}}"></td>
+                <td><a th:href="@{/users/view/__${user.id}__}" th:text="${user.name}"></a></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.address}"></td>
+                <td th:text="${user.doB}"></td>
+                <td th:text="${user.phone}"></td>
+                <td><a th:href="@{/users/edit/__${user.id}__ }">Edit</a></td>
+                <td><a th:href="@{/users/delete/__${user.id}__ }">Delete</a></td>
+            </tr>
+        </th:block>
+    </table>
+</div>
+
+</body>
+</html>

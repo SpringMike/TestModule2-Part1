@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View category</title>
+</head>
+
+<style>
+    table {
+        width: 80%;
+        margin: auto;
+        background: rgba(19, 35, 47, 0.9);
+        box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+        color: white;
+
+    }
+
+    th {
+        background-color: #1ab188;
+        padding: 10px;
+        text-transform: capitalize;
+        font-size: 18px;
+
+    }
+
+    td {
+        border: 1px solid #ffffff80;
+        padding: 10px;
+    }
+
+    a {
+        color: #19a07e;
+        text-decoration: none;
+        font-weight: 800;
+        border: 3px groove #1ab188;
+        padding: 8px;
+    }
+
+    a:hover {
+        color: red;
+        margin-left: 10px;
+        transition-duration: 1s;
+    }
+
+    tr:hover {
+        background-color: white;
+        color: black!important;
+        transition-duration: 1.2s;
+    }
+    body{
+        background: url(https://www.toptal.com/designers/subtlepatterns/patterns/hotel-wallpaper-black.png);
+        font-family: 'Titillium Web', sans-serif;
+        color: white;
+    }
+    img {
+        border-radius: 50%;
+        height:200px
+    }
+</style>
+
+
+<body>
+<h1 style="text-align: center">User Detail</h1>
+
+
+<form th:object="${users}">
+    <table border="1">
+        <tr>
+            <th>Id</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>D-O-B</th>
+            <th>Phone Number</th>
+        </tr>
+        <th:block th:each="user: ${users}">
+            <tr>
+                <td th:text="${users.id}"></td>
+                <td><img width="200px" height="150" th:src="@{'/img/' + ${users.img}}"></td>
+                <td th:text="${users.name}"></td>
+                <td th:text="${users.email}"></td>
+                <td th:text="${users.address}"></td>
+                <td th:text="${users.doB}"></td>
+                <td th:text="${users.phone}"></td>
+            </tr>
+        </th:block>
+    </table>
+    <p style="text-align: center">
+        <a href="/users//list"> Back to Users list</a>
+    </p>
+</form>
+</body>
+</html>
