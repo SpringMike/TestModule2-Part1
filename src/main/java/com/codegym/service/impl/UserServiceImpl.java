@@ -25,21 +25,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public Users findById(Long id) {
+    public Users findById(int id) {
         Users users = userRepository.findById(id);
         return users;
     }
 
     @Override
-    public void remove(Long id) {
+    public void remove(int id) {
         userRepository.remove(id);
 
     }
 
     @Override
-    public void editUsers(Long id, Users users) {
+    public void editUsers(int id, Users users) {
         userRepository.editUsers(id, users);
-
     }
+
+
 }
 

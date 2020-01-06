@@ -14,10 +14,7 @@ import java.util.Date;
 @NamedQuery( name="findAllUserst",
         query="select u from Users u")
 
-//@NamedStoredProcedureQuery(
-//        name = "getAllUsersStoredProcedure",
-//        procedureName = "findAllUsers"
-//)
+
 @NamedQuery( name="findProductById",
         query="select u from Users u where u.id=:userId")
 
@@ -25,16 +22,14 @@ import java.util.Date;
         name = "deleteUserStoredProcedure",
         procedureName = "deleteUsers",
         parameters = {
-                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Long.class),
+                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Integer.class),
         }
 )
 
-
 @NamedStoredProcedureQuery(
-        name = "updateUsersStoredProcedure",
-        procedureName = "editUsers",
+        name = "AddStoredProcedure",
+        procedureName = "addProduct",
         parameters = {
-                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = long.class),
                 @StoredProcedureParameter(name = "in_username", mode = ParameterMode.IN, type = String.class),
                 @StoredProcedureParameter(name = "in_useremail", mode = ParameterMode.IN, type = String.class),
                 @StoredProcedureParameter(name = "in_useraddress", mode = ParameterMode.IN, type = String.class),
@@ -44,25 +39,41 @@ import java.util.Date;
         }
 )
 
+@NamedStoredProcedureQuery(
+        name = "updateUsersStoredProcedure",
+        procedureName = "editUsers",
+        parameters = {
+                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Integer.class),
+                @StoredProcedureParameter(name = "in_username", mode = ParameterMode.IN, type = String.class),
+                @StoredProcedureParameter(name = "in_useremail", mode = ParameterMode.IN, type = String.class),
+                @StoredProcedureParameter(name = "in_useraddress", mode = ParameterMode.IN, type = String.class),
+                @StoredProcedureParameter(name = "in_userdoB", mode = ParameterMode.IN, type = String.class),
+                @StoredProcedureParameter(name = "in_userphone", mode = ParameterMode.IN, type = String.class),
+                @StoredProcedureParameter(name = "in_userimg", mode = ParameterMode.IN, type = String.class),
+
+        }
+)
+
+
+
 
 
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private int id;
 
 
     private String name;
 
     private String email;
     private String address;
-    private String  doB;
+    private String doB;
     private String phone;
     private String img;
 
 
-    public Users(String name, String email, String address, String doB, String phone,String img) {
-
+    public Users(String name, String email, String address, String doB, String phone, String img) {
         this.name = name;
         this.email = email;
         this.address = address;
@@ -71,23 +82,17 @@ public class Users {
         this.img = img;
     }
 
-    public Users(){
+    public Users() {
 
     }
 
-
-
-
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
-
-
 
     public String getName() {
         return name;
@@ -96,8 +101,6 @@ public class Users {
     public void setName(String name) {
         this.name = name;
     }
-
-
 
     public String getEmail() {
         return email;

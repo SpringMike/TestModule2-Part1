@@ -6,7 +6,6 @@ public class UsersForm {
 
 
     private String name;
-
     private String email;
     private String address;
     private String  doB;
@@ -16,8 +15,8 @@ public class UsersForm {
     public UsersForm() {
     }
 
-    public UsersForm( String name, String email, String address, String doB, String phone, MultipartFile img) {
 
+    public UsersForm(String name, String email, String address, String doB, String phone, MultipartFile img) {
         this.name = name;
         this.email = email;
         this.address = address;

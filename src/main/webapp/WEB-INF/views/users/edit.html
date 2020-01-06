@@ -33,8 +33,9 @@
         }
 
         body {
-            background: #c1bdba;
+            background: url(http://bit.ly/2gPLxZ4);
             font-family: 'Titillium Web', sans-serif;
+            background-size: 100%;
         }
 
         h1.title {
@@ -93,7 +94,7 @@
 </head>
 <body>
 
-<form th:action="@{/users/edit}" th:object="${users}" method="post" enctype="multipart/form-data"  >
+<form th:action="@{/users/edit}" th:object="${usersForm}" method="post" enctype="multipart/form-data"  >
 
     <h1 class="title">Edit User</h1>
     <div class="maxDiv">

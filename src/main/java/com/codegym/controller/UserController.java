@@ -19,9 +19,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 @Controller
-
-@RequestMapping("users/")
 @PropertySource("classpath:global_config_app.properties")
+@RequestMapping("users/")
+
 public class UserController {
     @Autowired
     Environment env;
@@ -93,7 +93,7 @@ public class UserController {
     }
 
     @GetMapping("/view/{id}")
-    public ModelAndView viewPhoneDetail(@PathVariable("id") Long id) {
+    public ModelAndView viewPhoneDetail(@PathVariable("id") int id) {
         Users users = userService.findById(id);
 
         ModelAndView modelAndView = new ModelAndView("/users/view");
@@ -101,7 +101,7 @@ public class UserController {
         return modelAndView;
     }
     @GetMapping("/delete/{id}")
-    public ModelAndView showDeletePhoneForm(@PathVariable("id") Long id) {
+    public ModelAndView showDeletePhoneForm(@PathVariable("id") int id) {
             Users users = userService.findById(id);
             ModelAndView modelAndView = new ModelAndView("/users/delete");
             modelAndView.addObject("users", users);
@@ -119,22 +119,23 @@ public class UserController {
     }
 
     @GetMapping("/edit/{id}")
-    public ModelAndView showEditForm(@PathVariable("id") long id) {
+    public ModelAndView showEditForm(@PathVariable int id) {
         Users users = userService.findById(id);
         if (users != null) {
             UsersForm usersForm = new UsersForm(users.getName(),users.getEmail(),users.getAddress(),users.getDoB(),users.getPhone(),null);
             ModelAndView modelAndView = new ModelAndView("/users/edit");
             modelAndView.addObject("usersForm", usersForm);
             modelAndView.addObject("users", users);
+
             return modelAndView;
         } else {
-            ModelAndView modelAndView = new ModelAndView("/errorLogin");
+            ModelAndView modelAndView = new ModelAndView("/users/errorLogin");
             return modelAndView;
         }
     }
 
     @PostMapping("/edit")
-    public ModelAndView saveEdited(@ModelAttribute("usersForm") UsersForm usersForm) {
+    public ModelAndView saveEdited( @ModelAttribute("usersForm") UsersForm usersForm) {
 
         MultipartFile multipartFile = usersForm.getImg();
         String fileName = multipartFile.getOriginalFilename();
@@ -148,7 +149,7 @@ public class UserController {
         Users users = new Users(usersForm.getName(), usersForm.getEmail(), usersForm.getAddress(),
                 usersForm.getDoB(), usersForm.getPhone(), fileName);
 
-          userService.editUsers(users.getId(),users);
+        userService.editUsers(users.getId(),users);
 
         ModelAndView modelAndView = new ModelAndView("/users/edit");
         modelAndView.addObject("usersForm", usersForm);
