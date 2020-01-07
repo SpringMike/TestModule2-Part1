@@ -22,7 +22,7 @@ import java.util.Date;
         name = "deleteUserStoredProcedure",
         procedureName = "deleteUsers",
         parameters = {
-                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Integer.class),
+                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Long.class),
         }
 )
 
@@ -43,7 +43,7 @@ import java.util.Date;
         name = "updateUsersStoredProcedure",
         procedureName = "editUsers",
         parameters = {
-                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Integer.class),
+                @StoredProcedureParameter(name = "in_userId", mode = ParameterMode.IN, type = Long.class),
                 @StoredProcedureParameter(name = "in_username", mode = ParameterMode.IN, type = String.class),
                 @StoredProcedureParameter(name = "in_useremail", mode = ParameterMode.IN, type = String.class),
                 @StoredProcedureParameter(name = "in_useraddress", mode = ParameterMode.IN, type = String.class),
@@ -61,7 +61,7 @@ import java.util.Date;
 public class Users {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private int id;
+    private Long id;
 
 
     private String name;
@@ -86,11 +86,11 @@ public class Users {
 
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
