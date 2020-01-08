@@ -97,6 +97,7 @@
 <form th:action="@{/users/edit}" th:object="${usersForm}" method="post" enctype="multipart/form-data"  >
 
     <h1 class="title">Edit User</h1>
+    <td><input placeholder="ID*" type="hidden" th:field="*{id}"/></td>
     <div class="maxDiv">
         <div class="gg123">
             <div class="g123"><input placeholder="Email*" type="text" th:field="*{email}"/></div>

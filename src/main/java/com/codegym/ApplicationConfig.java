@@ -2,9 +2,10 @@ package com.codegym;
 
 import com.codegym.repository.IUserRepository;
 import com.codegym.repository.impl.UserRepositoryImpl;
-import com.codegym.service.IGeneralService;
 import com.codegym.service.IUserService;
+import com.codegym.service.IUsersSpringDataService;
 import com.codegym.service.impl.UserServiceImpl;
+import com.codegym.service.impl.UsersSpringDataServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -45,6 +47,7 @@ import java.util.Properties;
 @EnableSpringDataWebSupport
 @ComponentScan("com.codegym.controller")
 @PropertySource("classpath:global_config_app.properties")
+@EnableJpaRepositories("com.codegym.repository")
 public class ApplicationConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
 
     @Autowired
@@ -57,8 +60,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         this.applicationContext = applicationContext;
     }
 
-
-
     @Bean
     IUserRepository userRepository(){
         return new UserRepositoryImpl();
@@ -67,6 +68,11 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     @Bean
     IUserService userSerivce(){
         return new UserServiceImpl();
+    }
+
+    @Bean
+    IUsersSpringDataService usersSpringDataService(){
+        return new UsersSpringDataServiceImpl();
     }
 
     @Bean
