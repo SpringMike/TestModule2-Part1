@@ -3,6 +3,7 @@ package com.codegym.controller;
 import com.codegym.model.Users;
 import com.codegym.model.UsersForm;
 import com.codegym.service.IUserService;
+import com.codegym.service.IUsersSpringDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.context.annotation.PropertySource;
@@ -28,6 +29,9 @@ public class UserController {
 
   @Autowired
   IUserService userService;
+
+  @Autowired
+    IUsersSpringDataService usersSpringDataService;
 
     @RequestMapping("/list")
     public ModelAndView getAllProduct() {
@@ -101,7 +105,7 @@ public class UserController {
         return modelAndView;
     }
     @GetMapping("/delete/{id}")
-    public ModelAndView showDeletePhoneForm(@PathVariable("id") int id) {
+    public ModelAndView showDeletePhoneForm(@PathVariable("id") long id) {
             Users users = userService.findById(id);
             ModelAndView modelAndView = new ModelAndView("/users/delete");
             modelAndView.addObject("users", users);
@@ -122,11 +126,8 @@ public class UserController {
     public ModelAndView showEditForm(@PathVariable int id) {
         Users users = userService.findById(id);
         if (users != null) {
-            UsersForm usersForm = new UsersForm(users.getName(),users.getEmail(),users.getAddress(),users.getDoB(),users.getPhone(),null);
             ModelAndView modelAndView = new ModelAndView("/users/edit");
-            modelAndView.addObject("usersForm", usersForm);
-            modelAndView.addObject("users", users);
-
+            modelAndView.addObject("usersForm", users);
             return modelAndView;
         } else {
             ModelAndView modelAndView = new ModelAndView("/users/errorLogin");
@@ -135,7 +136,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public ModelAndView saveEdited( @ModelAttribute("usersForm") UsersForm usersForm) {
+    public ModelAndView saveEdited(@ModelAttribute("usersForm") UsersForm usersForm) {
 
         MultipartFile multipartFile = usersForm.getImg();
         String fileName = multipartFile.getOriginalFilename();
@@ -146,15 +147,24 @@ public class UserController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        Users users = new Users(usersForm.getName(), usersForm.getEmail(), usersForm.getAddress(),
-                usersForm.getDoB(), usersForm.getPhone(), fileName);
 
-        userService.editUsers(users.getId(),users);
-
-        ModelAndView modelAndView = new ModelAndView("/users/edit");
-        modelAndView.addObject("usersForm", usersForm);
-        modelAndView.addObject("message", "users updated successfully");
-        return modelAndView;
+        Users users1 = usersSpringDataService.findById(usersForm.getId());
+        users1.setName(usersForm.getName());
+        users1.setAddress(usersForm.getAddress());
+        users1.setDoB(usersForm.getName());
+        users1.setEmail(usersForm.getEmail());
+        users1.setPhone(usersForm.getPhone());
+        users1.setImg(fileName);
+        if (users1 != null) {
+            usersSpringDataService.save(users1);
+            ModelAndView modelAndView = new ModelAndView("/users/edit");
+            modelAndView.addObject("usersForm", usersForm);
+            modelAndView.addObject("message", "users updated successfully");
+            return modelAndView;
+        } else {
+            ModelAndView modelAndView = new ModelAndView("/users/errorLogin");
+            return modelAndView;
+        }
     }
 
 
